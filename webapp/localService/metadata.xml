@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="LocalisationService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <Annotation Term="Core.Links">
+                <Collection>
+                    <Record>
+                        <PropertyValue Property="rel" String="author"/>
+                        <PropertyValue Property="href" String="https://cap.cloud.sap"/>
+                    </Record>
+                </Collection>
+            </Annotation>
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="ScopeItems" EntityType="LocalisationService.ScopeItems"/>
+                <EntitySet Name="MissingScopeItems" EntityType="LocalisationService.MissingScopeItems"/>
+                <EntitySet Name="DropdownValues" EntityType="LocalisationService.DropdownValues"/>
+            </EntityContainer>
+            <EntityType Name="ScopeItems">
+                <Key>
+                    <PropertyRef Name="autoID"/>
+                </Key>
+                <Property Name="autoID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="ScopeItemID" Type="Edm.String"/>
+                <Property Name="Description" Type="Edm.String"/>
+                <Property Name="LOB" Type="Edm.String"/>
+                <Property Name="BusinessArea" Type="Edm.String"/>
+                <Property Name="Status" Type="Edm.String"/>
+                <Property Name="AE" Type="Edm.String" MaxLength="20"/>
+                <Property Name="AR" Type="Edm.String" MaxLength="20"/>
+                <Property Name="AT" Type="Edm.String" MaxLength="20"/>
+                <Property Name="AU" Type="Edm.String" MaxLength="20"/>
+                <Property Name="BE" Type="Edm.String" MaxLength="20"/>
+                <Property Name="BG" Type="Edm.String" MaxLength="20"/>
+                <Property Name="BR" Type="Edm.String" MaxLength="20"/>
+                <Property Name="CA" Type="Edm.String" MaxLength="20"/>
+                <Property Name="CH" Type="Edm.String" MaxLength="20"/>
+                <Property Name="CL" Type="Edm.String" MaxLength="20"/>
+                <Property Name="CN" Type="Edm.String" MaxLength="20"/>
+                <Property Name="CO" Type="Edm.String" MaxLength="20"/>
+                <Property Name="CZ" Type="Edm.String" MaxLength="20"/>
+                <Property Name="DE" Type="Edm.String" MaxLength="20"/>
+                <Property Name="DK" Type="Edm.String" MaxLength="20"/>
+                <Property Name="EG" Type="Edm.String" MaxLength="20"/>
+                <Property Name="ES" Type="Edm.String" MaxLength="20"/>
+                <Property Name="FI" Type="Edm.String" MaxLength="20"/>
+                <Property Name="FR" Type="Edm.String" MaxLength="20"/>
+                <Property Name="GB" Type="Edm.String" MaxLength="20"/>
+                <Property Name="GR" Type="Edm.String" MaxLength="20"/>
+                <Property Name="HK" Type="Edm.String" MaxLength="20"/>
+                <Property Name="HR" Type="Edm.String" MaxLength="20"/>
+                <Property Name="HU" Type="Edm.String" MaxLength="20"/>
+                <Property Name="ID" Type="Edm.String" MaxLength="20"/>
+                <Property Name="IE" Type="Edm.String" MaxLength="20"/>
+                <Property Name="IL" Type="Edm.String" MaxLength="20"/>
+                <Property Name="IND" Type="Edm.String" MaxLength="20"/>
+                <Property Name="IT" Type="Edm.String" MaxLength="20"/>
+                <Property Name="JP" Type="Edm.String" MaxLength="20"/>
+                <Property Name="KR" Type="Edm.String" MaxLength="20"/>
+                <Property Name="KW" Type="Edm.String" MaxLength="20"/>
+                <Property Name="KZ" Type="Edm.String" MaxLength="20"/>
+                <Property Name="LU" Type="Edm.String" MaxLength="20"/>
+                <Property Name="MX" Type="Edm.String" MaxLength="20"/>
+                <Property Name="MY" Type="Edm.String" MaxLength="20"/>
+                <Property Name="NL" Type="Edm.String" MaxLength="20"/>
+                <Property Name="NR" Type="Edm.String" MaxLength="20"/>
+                <Property Name="NZ" Type="Edm.String" MaxLength="20"/>
+                <Property Name="OM" Type="Edm.String" MaxLength="20"/>
+                <Property Name="PE" Type="Edm.String" MaxLength="20"/>
+                <Property Name="PH" Type="Edm.String" MaxLength="20"/>
+                <Property Name="PL" Type="Edm.String" MaxLength="20"/>
+                <Property Name="PT" Type="Edm.String" MaxLength="20"/>
+                <Property Name="QA" Type="Edm.String" MaxLength="20"/>
+                <Property Name="RO" Type="Edm.String" MaxLength="20"/>
+                <Property Name="RS" Type="Edm.String" MaxLength="20"/>
+                <Property Name="RU" Type="Edm.String" MaxLength="20"/>
+                <Property Name="SA" Type="Edm.String" MaxLength="20"/>
+                <Property Name="SE" Type="Edm.String" MaxLength="20"/>
+                <Property Name="SG" Type="Edm.String" MaxLength="20"/>
+                <Property Name="SI" Type="Edm.String" MaxLength="20"/>
+                <Property Name="SK" Type="Edm.String" MaxLength="20"/>
+                <Property Name="TH" Type="Edm.String" MaxLength="20"/>
+                <Property Name="TR" Type="Edm.String" MaxLength="20"/>
+                <Property Name="TW" Type="Edm.String" MaxLength="20"/>
+                <Property Name="UA" Type="Edm.String" MaxLength="20"/>
+                <Property Name="US" Type="Edm.String" MaxLength="20"/>
+                <Property Name="ZA" Type="Edm.String" MaxLength="20"/>
+                <Property Name="Non_Localised" Type="Edm.String" MaxLength="20"/>
+            </EntityType>
+            <EntityType Name="MissingScopeItems">
+                <Key>
+                    <PropertyRef Name="autoId"/>
+                </Key>
+                <Property Name="autoId" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="customerOrProspect" Type="Edm.String"/>
+                <Property Name="customerName" Type="Edm.String"/>
+                <Property Name="brandGuardianStatus" Type="Edm.String"/>
+                <Property Name="globalServicesStatus" Type="Edm.String"/>
+                <Property Name="oppurtunityNumber" Type="Edm.String"/>
+                <Property Name="priority" Type="Edm.String"/>
+                <Property Name="goLiveDate" Type="Edm.Date"/>
+                <Property Name="revenue" Type="Edm.String"/>
+                <Property Name="country" Type="Edm.String"/>
+                <Property Name="industry" Type="Edm.String"/>
+                <Property Name="createdBy" Type="Edm.String" DefaultValue="Nywald"/>
+                <Property Name="createdOn" Type="Edm.Date"/>
+                <Property Name="ScopeItemID" Type="Edm.String"/>
+                <Property Name="Description" Type="Edm.String"/>
+                <Property Name="LOB" Type="Edm.String"/>
+                <Property Name="BusinessArea" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="DropdownValues">
+                <Key>
+                    <PropertyRef Name="name"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" Nullable="false"/>
+                <Property Name="Text" Type="Edm.String"/>
+            </EntityType>
+            <Annotations Target="LocalisationService.MissingScopeItems/createdOn">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

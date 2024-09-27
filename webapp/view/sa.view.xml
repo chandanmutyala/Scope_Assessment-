@@ -1,0 +1,1306 @@
+<mvc:View
+    controllerName="scopeassessment.controller.sa"
+    xmlns="sap.ui.table"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:u="sap.ui.unified"
+    xmlns:c="sap.ui.core"
+    xmlns:m="sap.m"
+    xmlns:rowmodes="sap.ui.table.rowmodes"
+    xmlns:tnt="sap.tnt"
+    height="100%"
+    xmlns:mdc="sap/ui/mdc"
+    xmlns:core="sap.ui.core"
+>
+    <m:Page
+        showHeader="false"
+        enableScrolling="false"
+        class="sapUiContentPadding"
+    >
+        <tnt:ToolHeader id="shellLikeToolHeaderOnlyMandatoryControls">
+            
+
+            <m:Title
+                text="Scope Assessment"
+                wrapping="false"
+            >
+                <m:layoutData>
+                    <m:OverflowToolbarLayoutData priority="Disappear" />
+                </m:layoutData>
+            </m:Title>
+        </tnt:ToolHeader>
+
+        <m:content>
+            <!-- <m:Label text="Select Country" labelFor="select1"/>
+             <m:Select id="select1" width="100%" items="{selectionmodel>/selectionitems}" selectedKey="MultiToggle" change="onSelectionModeChange">
+                <c:Item key="{selectionmodel>key}" text="{selectionmodel>text}"/>
+            </m:Select> -->
+            <m:Panel >
+            <m:MultiComboBox
+            id="scopeIdComboBox"
+                selectionChange="onComboBoxSelectionChange"
+                placeholder="Select Scope ID"
+                width="300px"
+            items="{
+                path: '/ScopeItems'
+            }">
+            <c:Item key="{ScopeItemID}" text="{ScopeItemID}"/>
+        </m:MultiComboBox>
+         <m:MultiComboBox
+            id="descriptionComboBox"
+                selectionChange="onComboBoxSelectionChange"
+                placeholder="Select Scope Description"
+                width="300px"
+            items="{
+                path: '/ScopeItems',
+                sorter: { path: 'Description' }
+            }">
+            <c:Item key="{Description}" text="{Description}"/>
+        </m:MultiComboBox>
+           
+           <m:MultiComboBox
+            id="lobComboBox"
+                selectionChange="onComboBoxSelectionChange"
+                placeholder="Select LOB"
+                width="300px"
+            items="{
+                path: '/LOB',
+                sorter: { path: 'name' }
+            }">
+            <c:Item key="{name}" text="{name}"/>
+        </m:MultiComboBox>
+            <m:MultiComboBox
+            id="businessAreaComboBox"
+                selectionChange="onComboBoxSelectionChange"
+                placeholder="Select BusinessArea"
+                width="300px"
+            items="{
+                path: '/BusinessArea',
+                sorter: { path: 'name' }
+            }">
+            <c:Item key="{name}" text="{name}"/>
+        </m:MultiComboBox>
+        <m:MultiComboBox
+            id="statusComboBox"
+                selectionChange="onComboBoxSelectionChange"
+                placeholder="Select Status"
+                width="300px"
+            items="{
+                path: '/DropdownValues'
+            }">
+            <c:Item key="{name}" text="{Text}"/>
+        </m:MultiComboBox>
+         <m:MultiComboBox
+            id="countryComboBox"
+                selectionChange="onCountrySelectionChange"
+                placeholder="Select Countries"
+                width="300px"
+            items="{
+                path: '/countries'
+            }">
+            <c:Item key="{code}" text="{code}" />
+        </m:MultiComboBox>
+            <!-- <m:MultiComboBox
+                id="countryComboBox"
+                selectionChange="onCountrySelectionChange"
+                placeholder="Select Countries"
+                width="300px"
+            /> -->
+            </m:Panel>
+ 
+<m:HBox
+    class="sapUiSmallMargin"
+    justifyContent="End" 
+    alignItems="Start">
+    
+    
+       <!-- Legend Container -->
+ <m:VBox>
+    <m:HBox class="sapUiSmallMarginEnd">
+        <m:HBox class="itemContainer">
+            <core:Icon
+                src="sap-icon://accept"
+                width="1.5rem"
+                height="1.5rem"
+                color="green"
+                class="sapUiSmallMarginEnd"/>
+            <m:Text text="Released" />
+        </m:HBox>
+ 
+        <m:HBox class="itemContainer">
+            <core:Icon
+                src="sap-icon://decline"
+                width="1.5rem"
+                height="1.5rem"
+                color="red"
+                class="sapUiSmallMarginEnd"/>
+            <m:Text text="No" />
+        </m:HBox>
+ 
+        <m:HBox class="itemContainer">
+            <core:Icon
+                src="sap-icon://cancel"
+                width="1.5rem"
+                height="1.5rem"
+                color="gray"
+                class="sapUiSmallMarginEnd"/>
+            <m:Text text="Not Available" />
+        </m:HBox>
+    </m:HBox>
+</m:VBox>
+ 
+
+</m:HBox>
+
+
+            <Table
+                class="tableclass"
+                id="scopeItemsTable"
+                rows="{
+                path: '/ScopeItems',
+                sorter: { path: 'ScopeItemID' }
+            }"
+                selectionMode="MultiToggle"
+                ariaLabelledBy="title"
+                rowActionCount="20"
+            >
+                <extension>
+                    <m:OverflowToolbar style="Clear">
+                        <m:Title
+                            id="title"
+                            text="Scope Items"
+                        />
+                    </m:OverflowToolbar>
+                </extension>
+                <rowMode>
+                    <rowmodes:Fixed rowCount="15" />
+                </rowMode>
+
+                <columns>
+                    <Column width="11rem">
+                        <m:Label text="Scope Item ID" />
+                        <template>
+                            <m:Text
+                                text="{ScopeItemID}"
+                                wrapping="false"
+                            />
+                        </template>
+                    </Column>
+                    <Column width="15rem">
+                        <m:Label text="Description" />
+                        <template>
+                            <m:Text
+                                text="{Description}"
+                                wrapping="false"
+                            />
+                        </template>
+                    </Column>
+                    <Column width="11rem">
+                        <m:Label text="Line of Business" />
+                        <template>
+                            <m:Text
+                                text="{LOB}"
+                                wrapping="false"
+                            />
+                        </template>
+                    </Column>
+                    <Column width="11rem">
+                        <m:Label text="Business Area" />
+                        <template>
+                            <m:Text
+                                text="{BusinessArea}"
+                                wrapping="false"
+                            />
+                        </template>
+                    </Column>
+                    <Column width="9rem">
+                        <m:Label text="Status"/>
+                        <template>
+                            <m:Text text="{Status}">
+                                <m:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${Status} === 'Available' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </m:customData>
+                            </m:Text>
+                        </template>
+                        <!-- <template>
+    <m:Text text="{Status}">
+        <m:customData>
+            <core:CustomData key="status" value="{Status}" writeToDom="true" />
+        </m:customData>
+    </m:Text>
+</template> -->
+                    </Column>
+
+                    <!-- Country columns -->
+                    <Column width="8rem">
+                        <m:Label text="AE"/>
+                        <template>
+                            <core:Icon
+                                src="{= ${AE} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${AE} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${AE} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="AR" />
+                        <template>
+                            <core:Icon
+                                src="{= ${AR} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${AR} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${AR} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="AT" />
+                        <template>
+                            <core:Icon
+                                src="{= ${AT} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${AT} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${AT} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="AU" />
+                        <template>
+                            <core:Icon
+                                src="{= ${AU} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${AU} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${AU} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="BE" />
+                        <template>
+                            <core:Icon
+                                src="{= ${BE} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${BE} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${BE} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="BG" />
+                        <template>
+                            <core:Icon
+                                src="{= ${BG} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${BG} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${BG} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="BR" />
+                        <template>
+                            <core:Icon
+                                src="{= ${BR} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${BR} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${BR} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="CA" />
+                        <template>
+                            <core:Icon
+                                src="{= ${CA} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${CA} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${CA} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="CH" />
+                        <template>
+                            <core:Icon
+                                src="{= ${CH} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${CH} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${CH} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="CL" />
+                        <template>
+                            <core:Icon
+                                src="{= ${CL} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${CL} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${CL} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="CN" />
+                        <template>
+                            <core:Icon
+                                src="{= ${CN} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${CN} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${CN} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="CO" />
+                        <template>
+                            <core:Icon
+                                src="{= ${CO} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${CO} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${CO} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="CZ" />
+                        <template>
+                            <core:Icon
+                                src="{= ${CZ} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${CZ} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${CZ} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="DE" />
+                        <template>
+                            <core:Icon
+                                src="{= ${DE} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${DE} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${DE} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="DK" />
+                        <template>
+                            <core:Icon
+                                src="{= ${DK} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${DK} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${DK} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="EG" />
+                        <template>
+                            <core:Icon
+                                src="{= ${EG} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${EG} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${EG} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="ES" />
+                        <template>
+                            <core:Icon
+                                src="{= ${ES} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${ES} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${ES} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="FI" />
+                        <template>
+                            <core:Icon
+                                src="{= ${FI} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${FI} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${FI} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="FR" />
+                        <template>
+                            <core:Icon
+                                src="{= ${FR} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${FR} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${FR} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="GB" />
+                        <template>
+                            <core:Icon
+                                src="{= ${GB} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${GB} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${GB} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="GR" />
+                        <template>
+                            <core:Icon
+                                src="{= ${GR} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${GR} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${GR} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="HK" />
+                        <template>
+                            <core:Icon
+                                src="{= ${HK} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${HK} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${HK} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="HR" />
+                        <template>
+                            <core:Icon
+                                src="{= ${HR} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${HR} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${HR} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="HU" />
+                        <template>
+                            <core:Icon
+                                src="{= ${HU} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${HU} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${HU} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="ID" />
+                        <template>
+                            <core:Icon
+                                src="{= ${ID} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${ID} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${ID} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="IE" />
+                        <template>
+                            <core:Icon
+                                src="{= ${IE} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${IE} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${IE} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="IL" />
+                        <template>
+                            <core:Icon
+                                src="{= ${IL} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${IL} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${IL} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="IND" />
+                        <template>
+                            <core:Icon
+                                src="{= ${IND} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${IND} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${IND} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="IT" />
+                        <template>
+                            <core:Icon
+                                src="{= ${IT} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${IT} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${IT} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="JP" />
+                        <template>
+                            <core:Icon
+                                src="{= ${JP} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${JP} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${JP} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="KR" />
+                        <template>
+                            <core:Icon
+                                src="{= ${KR} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${KR} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${KR} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="KW" />
+                        <template>
+                            <core:Icon
+                                src="{= ${KW} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${KW} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${KW} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="KZ" />
+                        <template>
+                            <core:Icon
+                                src="{= ${KZ} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${KZ} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${KZ} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="LU" />
+                        <template>
+                            <core:Icon
+                                src="{= ${LU} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${LU} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${LU} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="MX" />
+                        <template>
+                            <core:Icon
+                                src="{= ${MX} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${MX} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${MX} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="MY" />
+                        <template>
+                            <core:Icon
+                                src="{= ${MY} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${MY} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${MY} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="NL" />
+                        <template>
+                            <core:Icon
+                                src="{= ${NL} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${NL} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${NL} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="NR" />
+                        <template>
+                            <core:Icon
+                                src="{= ${NR} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${NR} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${NR} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="NZ" />
+                        <template>
+                            <core:Icon
+                                src="{= ${NZ} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${NZ} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${NZ} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="OM" />
+                        <template>
+                            <core:Icon
+                                src="{= ${OM} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${OM} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${OM} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="PE" />
+                        <template>
+                            <core:Icon
+                                src="{= ${PE} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${PE} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${PE} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="PH" />
+                        <template>
+                            <core:Icon
+                                src="{= ${PH} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${PH} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${PH} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="PL" />
+                        <template>
+                            <core:Icon
+                                src="{= ${PL} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${PL} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${PL} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+
+                    <Column width="8rem">
+                        <m:Label text="PT" />
+                        <template>
+                            <core:Icon
+                                src="{= ${PT} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${PT} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${PT} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="QA" />
+                        <template>
+                            <core:Icon
+                                src="{= ${QA} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${QA} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${QA} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="RO" />
+                        <template>
+                            <core:Icon
+                                src="{= ${RO} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${RO} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${RO} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="RS" />
+                        <template>
+                            <core:Icon
+                                src="{= ${RS} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${RS} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${RS} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="RU" />
+                        <template>
+                            <core:Icon
+                                src="{= ${RU} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${RU} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${RU} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="SA" />
+                        <template>
+                            <core:Icon
+                                src="{= ${SA} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${SA} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${SA} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="SE" />
+                        <template>
+                            <core:Icon
+                                src="{= ${SE} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${SE} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${SE} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="SG" />
+                        <template>
+                            <core:Icon
+                                src="{= ${SG} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${SG} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${SG} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="SI" />
+                        <template>
+                            <core:Icon
+                                src="{= ${SI} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${SI} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${SI} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="SK" />
+                        <template>
+                            <core:Icon
+                                src="{= ${SK} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${SK} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${SK} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="TH" />
+                        <template>
+                            <core:Icon
+                                src="{= ${TH} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${TH} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${TH} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="TR" />
+                        <template>
+                            <core:Icon
+                                src="{= ${TR} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${TR} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${TR} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="TW" />
+                        <template>
+                            <core:Icon
+                                src="{= ${TW} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${TW} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${TW} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="UA" />
+                        <template>
+                            <core:Icon
+                                src="{= ${UA} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${UA} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${UA} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="US" />
+                        <template>
+                            <core:Icon
+                                src="{= ${US} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${US} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${US} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="ZA" />
+                        <template>
+                            <core:Icon
+                                src="{= ${ZA} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${ZA} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${ZA} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                    <Column width="8rem">
+                        <m:Label text="Non-Localised" />
+                        <template>
+                            <core:Icon
+                                src="{= ${Non_Localised} === 'Released' ? 'sap-icon://accept' : 'sap-icon://decline'}"
+                                color="{= ${Non_Localised} === 'Released' ? 'green' : 'red'}"
+                            >
+                                <core:customData>
+                                    <core:CustomData
+                                        key="status"
+                                        value="{= ${Non_Localised} === 'Released' ? 'deletionFlagGreen' : 'deletionFlagRed'}"
+                                        writeToDom="true"
+                                    />
+                                </core:customData>
+                            </core:Icon>
+                        </template>
+                    </Column>
+                </columns>
+            </Table>
+        </m:content>
+        <m:footer>
+            <m:Toolbar>
+                <m:ToolbarSpacer />
+                <m:Button
+                    type="Emphasized"
+                    text="Export to Excel"
+                    press="onPress"
+                />
+            </m:Toolbar>
+        </m:footer>
+    </m:Page>
+</mvc:View>
+
+

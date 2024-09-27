@@ -1,0 +1,388 @@
+{
+    "countries": [
+        {
+            "code": "AE",
+            "name": "United Arab Emirates (AE)"
+        },
+        {
+            "code": "AR",
+            "name": "Argentina (AR)"
+        },
+        {
+            "code": "AT",
+            "name": "Austria (AT)"
+        },
+        {
+            "code": "AU",
+            "name": "Australia (AU)"
+        },
+        {
+            "code": "BE",
+            "name": "Belgium (BE)"
+        },
+        {
+            "code": "BG",
+            "name": "Bulgaria (BG)"
+        },
+        {
+            "code": "BR",
+            "name": "Brazil (BR)"
+        },
+        {
+            "code": "CA",
+            "name": "Canada (CA)"
+        },
+        {
+            "code": "CH",
+            "name": "Switzerland (CH)"
+        },
+        {
+            "code": "CL",
+            "name": "Chile (CL)"
+        },
+        {
+            "code": "CN",
+            "name": "China (CN)"
+        },
+        {
+            "code": "CO",
+            "name": "Colombia (CO)"
+        },
+        {
+            "code": "CZ",
+            "name": "Czech Republic (CZ)"
+        },
+        {
+            "code": "DE",
+            "name": "Germany (DE)"
+        },
+        {
+            "code": "DK",
+            "name": "Denmark (DK)"
+        },
+        {
+            "code": "EG",
+            "name": "Egypt (EG)"
+        },
+        {
+            "code": "ES",
+            "name": "Spain (ES)"
+        },
+        {
+            "code": "FI",
+            "name": "Finland (FI)"
+        },
+        {
+            "code": "FR",
+            "name": "France (FR)"
+        },
+        {
+            "code": "GB",
+            "name": "United Kingdom (GB)"
+        },
+        {
+            "code": "GR",
+            "name": "Greece (GR)"
+        },
+        {
+            "code": "HK",
+            "name": "Hong Kong (HK)"
+        },
+        {
+            "code": "HR",
+            "name": "Croatia (HR)"
+        },
+        {
+            "code": "HU",
+            "name": "Hungary (HU)"
+        },
+        {
+            "code": "ID",
+            "name": "Indonesia (ID)"
+        },
+        {
+            "code": "IE",
+            "name": "Ireland (IE)"
+        },
+        {
+            "code": "IL",
+            "name": "Israel (IL)"
+        },
+        {
+            "code": "IND",
+            "name": "India (IND)"
+        },
+        {
+            "code": "IT",
+            "name": "Italy (IT)"
+        },
+        {
+            "code": "JP",
+            "name": "Japan (JP)"
+        },
+        {
+            "code": "KR",
+            "name": "South Korea (KR)"
+        },
+        {
+            "code": "KW",
+            "name": "Kuwait (KW)"
+        },
+        {
+            "code": "KZ",
+            "name": "Kazakhstan (KZ)"
+        },
+        {
+            "code": "LU",
+            "name": "Luxembourg (LU)"
+        },
+        {
+            "code": "MX",
+            "name": "Mexico (MX)"
+        },
+        {
+            "code": "MY",
+            "name": "Malaysia (MY)"
+        },
+        {
+            "code": "NL",
+            "name": "Netherlands (NL)"
+        },
+        {
+            "code": "NR",
+            "name": "Norway (NR)"
+        },
+        {
+            "code": "NZ",
+            "name": "New Zealand (NZ)"
+        },
+        {
+            "code": "OM",
+            "name": "Oman (OM)"
+        },
+        {
+            "code": "PE",
+            "name": "Peru (PE)"
+        },
+        {
+            "code": "PH",
+            "name": "Philippines (PH)"
+        },
+        {
+            "code": "PL",
+            "name": "Poland (PL)"
+        },
+        {
+            "code": "PT",
+            "name": "Portugal (PT)"
+        },
+        {
+            "code": "QA",
+            "name": "Qatar (QA)"
+        },
+        {
+            "code": "RO",
+            "name": "Romania (RO)"
+        },
+        {
+            "code": "RS",
+            "name": "Serbia (RS)"
+        },
+        {
+            "code": "RU",
+            "name": "Russia (RU)"
+        },
+        {
+            "code": "SA",
+            "name": "Saudi Arabia (SA)"
+        },
+        {
+            "code": "SE",
+            "name": "Sweden (SE)"
+        },
+        {
+            "code": "SG",
+            "name": "Singapore (SG)"
+        },
+        {
+            "code": "SI",
+            "name": "Slovenia (SI)"
+        },
+        {
+            "code": "SK",
+            "name": "Slovakia (SK)"
+        },
+        {
+            "code": "TH",
+            "name": "Thailand (TH)"
+        },
+        {
+            "code": "TR",
+            "name": "Turkey (TR)"
+        },
+        {
+            "code": "TW",
+            "name": "Taiwan (TW)"
+        },
+        {
+            "code": "UA",
+            "name": "Ukraine (UA)"
+        },
+        {
+            "code": "US",
+            "name": "United States (US)"
+        },
+        {
+            "code": "ZA",
+            "name": "South Africa (ZA)"
+        },
+        {
+            "code": "Non_Localised",
+            "name": "Non-Localised"
+        }
+    ],
+    "lobOptions": [
+        "Application Platform and Infrastructure",
+        "Asset Management",
+        "Database and Data Management",
+        "Finance",
+        "Manufacturing",
+        "Human Resources",
+        "IT Management",
+        "R&D/Engineering",
+        "Sales",
+        "Service",
+        "Solutions for Specific Industries",
+        "Sourcing and Procurement",
+        "Supply Chain"
+    ],
+    "industries":[
+        {
+           
+            "name": "Energy"
+        },
+        {
+           
+            "name": "Education"
+        },
+        {
+           
+            "name": "Manufacturing"
+        }
+    ],
+    "businessAreaOptions": [
+        "Accounting and Financial Close",
+        "Administration and Usability",
+        "Advanced Accounting and Financial Close",
+        "Advanced Financial Operations",
+        "Advanced Order Promising",
+        "Automotive",
+        "Central Procurement",
+        "Core HR and Time Recording",
+        "Cost Management and Profitability Analysis",
+        "Delivery and Transportation",
+        "Enterprise Information Management",
+        "Enterprise Risk and Compliance",
+        "Environmental Footprint Management",
+        "Financial Operations",
+        "Inventory",
+        "Invoice Management",
+        "Logistics Cross Topics",
+        "Maintenance Management",
+        "Manufacturing Insights",
+        "Manufacturing Operations",
+        "Manufacturing Options",
+        "Oil and Gas",
+        "Operational Procurement",
+        "Order and Contract Management",
+        "Order Promising",
+        "Process Management and Integration",
+        "Procurement Analytics",
+        "Product Compliance",
+        "Product Lifecycle Management",
+        "Production Engineering",
+        "Production Planning",
+        "Professional Services",
+        "Project Control",
+        "Public Sector",
+        "Quality Management",
+        "Real Estate Management",
+        "Retail",
+        "Service Master Data & Agreement Management",
+        "Service Operations & Processes",
+        "Solution Business Management",
+        "Sourcing and Contract Management",
+        "Subscription Billing and Revenue Management",
+        "Supplier Management",
+        "Time Management",
+        "Treasury Management",
+        "Warehousing"
+    ],
+    "statusOptions": [
+        "Available",
+        "Deprecated"
+    ],
+    "columnMapping": {
+        "AE": 6,
+        "AR": 7,
+        "AT": 8,
+        "AU": 9,
+        "BE": 10,
+        "BG": 11,
+        "BR": 12,
+        "CA": 13,
+        "CH": 14,
+        "CL": 15,
+        "CN": 16,
+        "CO": 17,
+        "CZ": 18,
+        "DE": 19,
+        "DK": 20,
+        "EG": 21,
+        "ES": 22,
+        "FI": 23,
+        "FR": 24,
+        "GB": 25,
+        "GR": 26,
+        "HK": 27,
+        "HR": 28,
+        "HU": 29,
+        "ID": 30,
+        "IE": 31,
+        "IL": 32,
+        "IND": 33,
+        "IT": 34,
+        "JP": 35,
+        "KR": 36,
+        "KW": 37,
+        "KZ": 38,
+        "LU": 39,
+        "MX": 40,
+        "MY": 41,
+        "NL": 42,
+        "NR": 43,
+        "NZ": 44,
+        "OM": 45,
+        "PE": 46,
+        "PH": 47,
+        "PL": 48,
+        "PT": 49,
+        "QA": 50,
+        "RO": 51,
+        "RS": 52,
+        "RU": 53,
+        "SA": 54,
+        "SE": 55,
+        "SG": 56,
+        "SI": 57,
+        "SK": 58,
+        "TH": 59,
+        "TR": 60,
+        "TW": 61,
+        "UA": 62,
+        "US": 63,
+        "ZA": 64,
+        "Non_Localised": 65
+    }
+}
+ 
