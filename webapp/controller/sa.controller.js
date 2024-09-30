@@ -2,8 +2,10 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (Controller, JSONModel, Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/ui/comp/valuehelpdialog/ValueHelpDialog",
+    "sap/m/Token"
+], function (Controller, JSONModel, Filter, FilterOperator, ValueHelpDialog, Token) {
     "use strict";
 
     return Controller.extend("scopeassessment.controller.sa", {
@@ -12,297 +14,209 @@ sap.ui.define([
             var oModel = new JSONModel();
             oModel.loadData("./model/data.json");
             this.getView().setModel(oModel, "countryModel");
-
-            // var oModel = this.getOwnerComponent().getModel("countryModel");
-            // this.getView().setModel(oModel,"countryModel");
-
-        //     oModel.attachRequestCompleted(function () {
-        //         var aCountryData = oModel.getProperty("/countries");
-        //         var oColumnMapping = oModel.getProperty("/columnMapping");
-
-        //         // Populate LOB ComboBox
-        //         var aLOBOptions = oModel.getProperty("/lobOptions");
-        //         this._populateComboBox("lobComboBox", aLOBOptions);
-
-        //         // Populate Business Area ComboBox
-        //         var aBusinessAreaOptions = oModel.getProperty("/businessAreaOptions");
-        //         this._populateComboBox("businessAreaComboBox", aBusinessAreaOptions);
-
-        //         // Populate Status ComboBox
-        //         var aStatusOptions = oModel.getProperty("/statusOptions");
-        //         this._populateComboBox("statusComboBox", aStatusOptions);
-
-        //         //Bind MultiComboBox for Country
-        //         if (Array.isArray(aCountryData)) {
-        //             var oComboBox = this.byId("countryComboBox");
-        //             aCountryData.forEach(function (oCountry) {
-        //                 oComboBox.addItem(new sap.ui.core.Item({
-        //                     key: oCountry.code,
-        //                     text: oCountry.name
-        //                 }));
-        //             });
-        //         } else {
-        //             console.error("Country data is not an array.");
-        //         }
-
-        //         // Display all columns initially
-        //         var oTable = this.byId("scopeItemsTable");
-        //         var aColumns = oTable.getColumns();
-        //         aColumns.forEach(function (oColumn) {
-        //             oColumn.setVisible(true);  // Set all columns visible initially
-        //         });
-        //     }.bind(this));
-        // },
-        // onNavBack: function () {
-        //     var oRouter = this.getOwnerComponent().getRouter();
-        //     oRouter.navTo("Routehomepage");
-        // },
-
-        // _populateComboBox: function (sComboBoxId, aOptions) {
-        //     var oComboBox = this.byId(sComboBoxId);
-        //     if (oComboBox && Array.isArray(aOptions)) {
-        //         aOptions.forEach(function (sOption) {
-        //             oComboBox.addItem(new sap.ui.core.Item({
-        //                 key: sOption,
-        //                 text: sOption
-        //             }));
-        //         });
-        //     } else {
-        //         console.error("Failed to populate ComboBox: " + sComboBoxId);
-        //     }
+            this.aSelectedScopeIds = [];  
+        
+           // Listen to changes in the MultiInput tokens (added or removed)
+    var oMultiInput = this.byId("scopeIdMultiInput");
+    oMultiInput.attachTokenUpdate(this._onTokenUpdate, this);
         },
-        // onComboBoxSelectionChange: function () {
-        //     var aFilters = [];
-
-        //     // Get selected values from id ComboBox
-        //     var oComboBox = this.byId("scopeIdComboBox");
-        //     var aSelectedKeys = oComboBox.getSelectedKeys();
-        //     console.log("Selected Scope IDs:", aSelectedKeys);  // Debugging output
-
-        //     if (aSelectedKeys.length > 0) {
-        //         aFilters.push(new Filter("ScopeItemID", FilterOperator.Contains, aSelectedKeys));
-        //     }
-
-        //      // Get selected values from description ComboBox
-        //      var oComboBox = this.byId("descriptionComboBox");
-        //      var aSelecteddes = oComboBox.getSelectedKeys();
-        //      console.log("Selected Scope des:", aSelecteddes);  // Debugging output
- 
-        //      if (aSelecteddes.length > 0) {
-        //          aFilters.push(new Filter("Description", FilterOperator.Contains, aSelecteddes));
-        //      }
-
-        //     // Get selected values from LOB ComboBox
-        //     var aSelectedLOB = this.byId("lobComboBox").getSelectedKeys();
-        //     if (aSelectedLOB.length > 0) {
-        //         aFilters.push(new Filter("LOB", FilterOperator.Contains, aSelectedLOB));
-        //     }
-
-        //     // Get selected values from Business Area ComboBox
-        //     var aSelectedBusinessArea = this.byId("businessAreaComboBox").getSelectedKeys();
-        //     if (aSelectedBusinessArea.length > 0) {
-        //         aFilters.push(new Filter("BusinessArea", FilterOperator.Contains, aSelectedBusinessArea));
-        //     }
-
-        //     // Get selected values from Status ComboBox
-        //     var aSelectedStatus = this.byId("statusComboBox").getSelectedKeys();
-        //     if (aSelectedStatus.length > 0) {
-        //         aFilters.push(new Filter("Status", FilterOperator.Contains, aSelectedStatus));
-        //     }
-
-        //     // Combine all filters with AND operator
-        //     var oCombinedFilter = new Filter({
-        //         filters: aFilters,
-        //         and: true
-        //     });
-
-        //     // Apply the filters to the table
-        //     var oTable = this.byId("scopeItemsTable");
-        //     var oBinding = oTable.getBinding("rows");  // Use "items" instead of "rows" if using sap.m.Table
-        //     oBinding.filter(oCombinedFilter);
-        // },
-
+        
+        _onTokenUpdate: function (oEvent) {
+            var oMultiInput = oEvent.getSource();
+            var aRemovedTokens = oEvent.getParameter("removedTokens");
+            var aAddedTokens = oEvent.getParameter("addedTokens");
+        
+            // Check if the MultiInput source is valid
+            if (!oMultiInput) {
+                console.error("MultiInput source is not valid.");
+                return;
+            }
+        
+            // Handle removed tokens
+            if (aRemovedTokens) {
+                aRemovedTokens.forEach(function(oToken) {
+                    var sRemovedKey = oToken.getKey();
+                    var iIndex = this.aSelectedScopeIds.indexOf(sRemovedKey);
+                    if (iIndex > -1) {
+                        this.aSelectedScopeIds.splice(iIndex, 1);
+                    }
+                }, this);
+            }
+        
+            // Handle added tokens
+            if (aAddedTokens) {
+                aAddedTokens.forEach(function(oToken) {
+                    var sAddedKey = oToken.getKey();
+                    if (this.aSelectedScopeIds.indexOf(sAddedKey) === -1) {
+                        this.aSelectedScopeIds.push(sAddedKey);
+                    }
+                }, this);
+            }
+        
+            console.log("Updated Selected Scope IDs Array:", this.aSelectedScopeIds);  // Log for debugging
+        
+            // Immediately apply filters based on the updated aSelectedScopeIds
+            this._applyCombinedFilters();
+        },
+        
+        
+        onValueHelpRequest: function () {
+            if (!this._oValueHelpDialog) {
+                this._oValueHelpDialog = new sap.m.SelectDialog({
+                    title: "Select Scope ID",
+                    multiSelect: true,
+                    items: {
+                        path: '/ScopeItems',
+                        template: new sap.m.StandardListItem({
+                            title: "{ScopeItemID}",
+                            description: "{ScopeItemDescription}"
+                        })
+                    },
+                    confirm: this._handleValueHelpClose.bind(this),
+                    cancel: this._handleValueHelpClose.bind(this)
+                });
+                this.getView().addDependent(this._oValueHelpDialog);
+            }
+            
+            this._oValueHelpDialog.open();
+        },
+        
+        _handleValueHelpClose: function (oEvent) {
+            var aSelectedItems = oEvent.getParameter("selectedItems");
+            var oMultiInput = this.byId("scopeIdMultiInput");
+        
+            // Clear the previous selections
+            this.aSelectedScopeIds = [];
+            oMultiInput.removeAllTokens();
+        
+            if (aSelectedItems && aSelectedItems.length > 0) {
+                aSelectedItems.forEach(function (oItem) {
+                    var sScopeItemID = oItem.getTitle();
+        
+                    oMultiInput.addToken(new sap.m.Token({
+                        key: sScopeItemID,
+                        text: sScopeItemID
+                    }));
+        
+                    this.aSelectedScopeIds.push(sScopeItemID);
+                }, this);
+            }
+        
+            // Apply combined filters whenever the Scope ID is changed
+            this._applyCombinedFilters();
+        },
+        
         onComboBoxSelectionChange: function () {
+            // Call the combined filter function when any of the ComboBox selections change
+            this._applyCombinedFilters();
+        },
+        
+        _applyCombinedFilters: function () {
             var aFilters = [];
         
-            // Get selected values from Scope ID ComboBox
-            var oScopeIdComboBox = this.byId("scopeIdComboBox");
-            var aSelectedScopeIds = oScopeIdComboBox.getSelectedKeys();
-            console.log("Selected Scope IDs:", aSelectedScopeIds);  // Debugging output
+           // Create filters based on selected scope IDs
+           if (this.aSelectedScopeIds.length > 0) {
+            var aScopeFilters = this.aSelectedScopeIds.map(function (sScopeItemID) {
+                return new sap.ui.model.Filter("ScopeItemID", sap.ui.model.FilterOperator.EQ, sScopeItemID);
+            });
+    
+            // Combine scope filters with OR logic
+            var oScopeIDFilter = new sap.ui.model.Filter({
+                filters: aScopeFilters,
+                and: false  // Use OR condition for Scope IDs
+            });
+    
+            aFilters.push(oScopeIDFilter);
+        }
         
-            if (aSelectedScopeIds.length > 0) {
-                var aScopeIdFilters = aSelectedScopeIds.map(function (sKey) {
-                    console.log("Creating filter for Scope ID:", sKey);  // Debugging output
-                    return new Filter("ScopeItemID", FilterOperator.EQ, sKey);
-                });
-        
-                var oScopeIdFilter = new Filter({
-                    filters: aScopeIdFilters,
-                    and: false  // OR operator for multiple selected IDs
-                });
-        
-                aFilters.push(oScopeIdFilter);
-            }
-            var descComboBox = this.byId("descriptionComboBox");
-            var aSelectedDesc = descComboBox.getSelectedKeys();
-            console.log("Selected Desc:", aSelectedDesc);  // Debugging output
-        
+            // Step 2: Add Description Filters
+            var oDescComboBox = this.byId("descriptionComboBox");
+            var aSelectedDesc = oDescComboBox.getSelectedKeys();
             if (aSelectedDesc.length > 0) {
                 var aDescFilters = aSelectedDesc.map(function (sKey) {
-                    console.log("Creating filter for Desc:", sKey);  // Debugging output
-                    return new Filter("Description", FilterOperator.EQ, sKey);
+                    return new sap.ui.model.Filter("Description", sap.ui.model.FilterOperator.EQ, sKey);
                 });
         
-                var oDescFilters = new Filter({
+                var oDescFilter = new sap.ui.model.Filter({
                     filters: aDescFilters,
-                    and: false  // OR operator for multiple selected LOBs
+                    and: false  // OR operator for multiple Descriptions
                 });
         
-                aFilters.push(oDescFilters);
+                aFilters.push(oDescFilter);
             }
         
-            // Get selected values from LOB ComboBox
+            // Step 3: Add LOB Filters
             var oLOBComboBox = this.byId("lobComboBox");
             var aSelectedLOBs = oLOBComboBox.getSelectedKeys();
-            console.log("Selected LOBs:", aSelectedLOBs);  // Debugging output
-        
             if (aSelectedLOBs.length > 0) {
                 var aLOBFilters = aSelectedLOBs.map(function (sKey) {
-                    console.log("Creating filter for LOB:", sKey);  // Debugging output
-                    return new Filter("LOB", FilterOperator.EQ, sKey);
+                    return new sap.ui.model.Filter("LOB", sap.ui.model.FilterOperator.EQ, sKey);
                 });
         
-                var oLOBFilter = new Filter({
+                var oLOBFilter = new sap.ui.model.Filter({
                     filters: aLOBFilters,
-                    and: false  // OR operator for multiple selected LOBs
+                    and: false  // OR operator for multiple LOBs
                 });
         
                 aFilters.push(oLOBFilter);
             }
         
-            // Get selected values from Business Area ComboBox
+            // Step 4: Add Business Area Filters
             var oBusinessAreaComboBox = this.byId("businessAreaComboBox");
             var aSelectedBusinessAreas = oBusinessAreaComboBox.getSelectedKeys();
-            console.log("Selected Business Areas:", aSelectedBusinessAreas);  // Debugging output
-        
             if (aSelectedBusinessAreas.length > 0) {
                 var aBusinessAreaFilters = aSelectedBusinessAreas.map(function (sKey) {
-                    console.log("Creating filter for Business Area:", sKey);  // Debugging output
-                    return new Filter("BusinessArea", FilterOperator.EQ, sKey);
+                    return new sap.ui.model.Filter("BusinessArea", sap.ui.model.FilterOperator.EQ, sKey);
                 });
         
-                var oBusinessAreaFilter = new Filter({
+                var oBusinessAreaFilter = new sap.ui.model.Filter({
                     filters: aBusinessAreaFilters,
-                    and: false  // OR operator for multiple selected Business Areas
+                    and: false  // OR operator for multiple Business Areas
                 });
         
                 aFilters.push(oBusinessAreaFilter);
             }
         
-            // Get selected values from Status ComboBox
+            // Step 5: Add Status Filters
             var oStatusComboBox = this.byId("statusComboBox");
             var aSelectedStatuses = oStatusComboBox.getSelectedKeys();
-            console.log("Selected Statuses:", aSelectedStatuses);  // Debugging output
-        
             if (aSelectedStatuses.length > 0) {
                 var aStatusFilters = aSelectedStatuses.map(function (sKey) {
-                    console.log("Creating filter for Status:", sKey);  // Debugging output
-                    return new Filter("Status", FilterOperator.EQ, sKey);
+                    return new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.EQ, sKey);
                 });
         
-                var oStatusFilter = new Filter({
+                var oStatusFilter = new sap.ui.model.Filter({
                     filters: aStatusFilters,
-                    and: false  // OR operator for multiple selected Statuses
+                    and: true  // OR operator for multiple Statuses
                 });
         
                 aFilters.push(oStatusFilter);
             }
         
-            // Combine all filters with AND operator
-            var oCombinedFilter = new Filter({
-                filters: aFilters,
-                and: true
-            });
-        
-            console.log("Combined Filter:", oCombinedFilter);  // Debugging output
-        
-            // Apply the filters to the table
+            // Step 6: Apply Combined Filter to the Table
             var oTable = this.byId("scopeItemsTable");
-            var oBinding = oTable.getBinding("rows");  // Use "items" if it's an sap.m.Table
-            oBinding.filter(oCombinedFilter);
+            var oBinding = oTable.getBinding("rows");
         
-            console.log("Table Binding:", oBinding);  // Debugging output
+            if (oBinding) {
+                if (aFilters.length > 0) {
+                    console.log("Applying Combined Filter:", aFilters);  // Log filter for debugging
+                    oBinding.filter(new sap.ui.model.Filter(aFilters, true), sap.ui.model.FilterType.Application);
+                } else {
+                    // If no filters are applied, clear existing filters
+                    console.log("Clearing filters.");  // Log for debugging
+                    oBinding.filter([]);
+                }
+            } else {
+                console.error("Table binding not found.");  // Debugging information
+            }
         },
-        // onAfterRendering: function () {
-        //     var oTable = this.byId("scopeItemsTable"); // Replace with your table's ID
-        //     //var aRows = oTable.getRows(); // Get all rows
-
-           
-               
-        //         var oItem = oTable.getItems();
-        //         var aCells = oItem.getCells(); // Get cells in the row
-
-        //         // Assuming Status column index is 4; adjust as necessary
-        //         // var oStatusCell = aCells[4]; // Adjust index based on your table structure
-        //         // console.log(oStatusCell + "cell 4")
-        //         // var status = oStatusCell.mBindingInfos.text.binding.sPath; // Get the status text
-
-               
-        //         var  status = oItem.getBindingContext().getProperty('status');
-        //         aCells.forEach(function (oCell) {
-
-                
-        //         console.log("Status: ",status)
-
-        //         // Apply the CSS class based on status
-        //         if (status === "Available") {
-        //             console.log("If block status : ",status)
-        //             oCell.addStyleClass("greenBackground");
-        //         } else if (status === 'Deprecated') {
-        //             oCell.addStyleClass("redBackground");
-        //         }
-                
-        //     });
-        // },
-       
-        // statusFormatter: function (status) {
-        //     if (status === "deprecated") {
-        //         return "redCell"; 
-        //     } else if (status === "available") {
-        //         return "greenCell";             }
-        //           },
-
-
         
-         
+
+
+
         onAfterRendering: function () {
             this._applyCustomStyles(); // Ensure this is called after rendering
         },
-        
-        // _applyCustomStyles: function () {
-        //     var oTable = this.byId("scopeItemsTable");
-        //     var aRows = oTable.getRows();
-        
-        //     aRows.forEach(function (oRow, iIndex) {
-        //         var aCells = oRow.getCells();
-        //         var oCustomData = aCells[4].getCustomData()[0]; 
-        //         var sClass = oCustomData.getValue(); 
-                
-        //         // Debugging
-        //         console.log("Row Index:", iIndex);
-        //         console.log("Cell Class:", sClass);
-                
-        //         // Apply styles
-        //         aCells[4].addStyleClass(sClass);
-        //     });
-        // }
-        
-        
-
-        
-        
-        
-
 
         onCountrySelectionChange: function (oEvent) {
             var aSelectedKeys = oEvent.getSource().getSelectedKeys();
@@ -311,7 +225,7 @@ sap.ui.define([
             // var oColumnMapping = this.getView().getModel("countryModel").getProperty("/columnMapping");
 
             var oColumnMapping = this.getOwnerComponent().getModel("countryModel").getProperty("/columnMapping");
-            
+
             // var oModel = this.getOwnerComponent().getModel("countryModel");
             // this.getView().setModel(oModel,"countryModel");
             console.log("Selected keys: ", aSelectedKeys);
@@ -351,9 +265,9 @@ sap.ui.define([
                         }
                     });
                 }
-            };  
-            
-            
+            };
+
+
 
 
 
