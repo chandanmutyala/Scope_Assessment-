@@ -35,19 +35,7 @@
                 <c:Item key="{selectionmodel>key}" text="{selectionmodel>text}"/>
             </m:Select> -->
             <m:Panel >
-            <!-- <m:MultiComboBox
-            id="scopeIdComboBox"
-                selectionChange="onComboBoxSelectionChange"
-                placeholder="Select Scope ID"
-                width="300px"
-            items="{
-                path: '/ScopeItems'
-            }">
-            <c:Item key="{ScopeItemID}" text="{ScopeItemID}"/>
-        </m:MultiComboBox>  -->
-
-
-     <m:MultiInput
+            <m:MultiInput
     id="scopeIdMultiInput"
     showValueHelp="true"
     valueHelpRequest="onValueHelpRequest"
@@ -111,7 +99,7 @@
             items="{
                 path: '/countries'
             }">
-            <c:Item key="{code}" text="{code}" />
+            <c:Item key="{code}" text="{name}" />
         </m:MultiComboBox>
             <!-- <m:MultiComboBox
                 id="countryComboBox"
@@ -208,7 +196,7 @@
                             />
                         </template>
                     </Column>
-                    <Column width="15rem">
+                    <Column width="30rem">
                         <m:Label text="Description" />
                         <template>
                             <m:Text
