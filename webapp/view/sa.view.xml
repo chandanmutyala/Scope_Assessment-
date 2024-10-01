@@ -47,7 +47,7 @@
 
 
 
-         <m:MultiComboBox
+         <!-- <m:MultiComboBox
             id="descriptionComboBox"
                 selectionChange="onComboBoxSelectionChange"
                 placeholder="Select Scope Description"
@@ -57,7 +57,19 @@
                 sorter: { path: 'Description' }
             }">
             <c:Item key="{Description}" text="{Description}"/>
+        </m:MultiComboBox> -->
+        <m:MultiComboBox
+            id="descriptionComboBox"
+                selectionChange="onComboBoxSelectionChange"
+                placeholder="Select Scope Description"
+                width="300px"
+            items="{
+                        path: '/getUniqueValues(column=\'Description\')',
+                        sorter: { path: '' }
+                    }">
+            <c:Item key="{keey}" text="{text}"/>
         </m:MultiComboBox>
+
            
            <m:MultiComboBox
             id="lobComboBox"
@@ -65,10 +77,10 @@
                 placeholder="Select LOB"
                 width="300px"
             items="{
-                path: '/LOB',
+                path: '/getUniqueValues(column=\'LOB\')',
                 sorter: { path: 'name' }
             }">
-            <c:Item key="{name}" text="{name}"/>
+            <c:Item key="{keey}" text="{text}"/>
         </m:MultiComboBox>
             <m:MultiComboBox
             id="businessAreaComboBox"
@@ -76,10 +88,10 @@
                 placeholder="Select BusinessArea"
                 width="300px"
             items="{
-                path: '/BusinessArea',
+                path: '/getUniqueValues(column=\'BusinessArea\')',
                 sorter: { path: 'name' }
             }">
-            <c:Item key="{name}" text="{name}"/>
+            <c:Item key="{keey}" text="{text}"/>
         </m:MultiComboBox>
         <m:MultiComboBox
             id="statusComboBox"
@@ -87,9 +99,9 @@
                 placeholder="Select Status"
                 width="300px"
             items="{
-                path: '/DropdownValues'
+                path: '/getUniqueValues(column=\'Status\')'
             }">
-            <c:Item key="{name}" text="{Text}"/>
+            <c:Item key="{keey}" text="{text}"/>
         </m:MultiComboBox>
          <m:MultiComboBox
             id="countryComboBox"
