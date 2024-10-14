@@ -38,11 +38,10 @@
             <m:MultiInput
     id="scopeIdMultiInput"
     showValueHelp="true"
-    valueHelpRequest="onValueHelpRequest"
+    valueHelpRequest=".onValueHelpRequest"
     placeholder="Select Scope IDs"
-    tokenUpdate=".onTokenChange" 
     width="300px"
-    >
+    tokenUpdate=".onTokenChange">
 </m:MultiInput>
 
 
@@ -64,8 +63,7 @@
                 placeholder="Select Scope Description"
                 width="300px"
             items="{
-                        path: '/getUniqueValues(column=\'Description\')',
-                        sorter: { path: '' }
+                        path: '/getUniqueValues(column=\'Description\')'
                     }">
             <c:Item key="{keey}" text="{text}"/>
         </m:MultiComboBox>
@@ -77,8 +75,7 @@
                 placeholder="Select LOB"
                 width="300px"
             items="{
-                path: '/getUniqueValues(column=\'LOB\')',
-                sorter: { path: 'name' }
+                path: '/getUniqueValues(column=\'LOB\')'
             }">
             <c:Item key="{keey}" text="{text}"/>
         </m:MultiComboBox>
@@ -88,8 +85,7 @@
                 placeholder="Select BusinessArea"
                 width="300px"
             items="{
-                path: '/getUniqueValues(column=\'BusinessArea\')',
-                sorter: { path: 'name' }
+                path: '/getUniqueValues(column=\'BusinessArea\')'
             }">
             <c:Item key="{keey}" text="{text}"/>
         </m:MultiComboBox>

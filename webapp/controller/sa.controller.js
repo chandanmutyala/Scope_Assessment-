@@ -4,8 +4,9 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/comp/valuehelpdialog/ValueHelpDialog",
-    "sap/m/Token"
-], function (Controller, JSONModel, Filter, FilterOperator, ValueHelpDialog, Token) {
+    "sap/m/Token",
+    "sap/ui/model/Sorter"
+], function (Controller, JSONModel, Filter, FilterOperator, ValueHelpDialog, Token,Sorter) {
     "use strict";
 
     return Controller.extend("scopeassessment.controller.sa", {
@@ -60,17 +61,269 @@ sap.ui.define([
         },
 
 
+        // onValueHelpRequest: function () {
+        //     if (!this._oValueHelpDialog) {
+        //         this._oValueHelpDialog = new sap.m.SelectDialog({
+        //             title: "Select Scope ID",
+        //             search: this._handleValueHelpSearch.bind(this),
+        //             multiSelect: true,
+        //             items: {
+        //                 path: '/ScopeItems',
+        //                 template: new sap.m.StandardListItem({
+        //                     title: "{ScopeItemID}",
+        //                     description: "{ScopeItemDescription}"
+        //                 }),
+        //                 sorter: new sap.ui.model.Sorter("ScopeItemID", false)
+        //             },
+        //             confirm: this._handleValueHelpClose.bind(this),
+        //             cancel: this._handleValueHelpClose.bind(this)
+        //         });
+        //         this.getView().addDependent(this._oValueHelpDialog);
+        //     }
+
+        //     this._oValueHelpDialog.open();
+        // },
+        // _handleValueHelpSearch: function (evt) {
+        //     var sValue = evt.getParameter("value");
+        
+        //     // Create a filter for the 'ScopeItemID' property
+        //     var oFilter = new sap.ui.model.Filter({
+        //         path: "ScopeItemID", // Ensure the path matches the property in the model
+        //         operator: sap.ui.model.FilterOperator.Contains,
+        //         value1: sValue
+        //     });
+        
+        //     // Get the binding for the 'items' aggregation of the SelectDialog
+        //     var oBinding = evt.getSource().getBinding("items");
+        
+        //     // Check if the binding is present
+        //     if (oBinding) {
+        //         console.log("Binding Info:", oBinding);
+
+        //         // Apply the filter to the binding
+        //         oBinding.filter([oFilter]);
+        //     }
+        // },
+        
+        
+
+        // _handleValueHelpClose: function (oEvent) {
+        //     var aSelectedItems = oEvent.getParameter("selectedItems");
+        //     var oMultiInput = this.byId("scopeIdMultiInput");
+
+        //     // Clear the previous selections
+        //     this.aSelectedScopeIds = [];
+        //     oMultiInput.removeAllTokens();
+
+        //     if (aSelectedItems && aSelectedItems.length > 0) {
+        //         aSelectedItems.forEach(function (oItem) {
+        //             var sScopeItemID = oItem.getTitle();
+
+        //             oMultiInput.addToken(new sap.m.Token({
+        //                 key: sScopeItemID,
+        //                 text: sScopeItemID
+        //             }));
+
+        //             this.aSelectedScopeIds.push(sScopeItemID);
+        //         }, this);
+        //     }
+
+        //     // Apply combined filters whenever the Scope ID is changed
+        //     this._applyCombinedFilters();
+        // },
+
+        // onComboBoxSelectionChange: function () {
+        //     // Call the combined filter function when any of the ComboBox selections change
+        //     this._applyCombinedFilters();
+        // },
+
+        // _applyCombinedFilters: function () {
+        //     var aFilters = [];
+
+        //     // Create filters based on selected scope IDs
+        //     if (this.aSelectedScopeIds.length > 0) {
+        //         var aScopeFilters = this.aSelectedScopeIds.map(function (sScopeItemID) {
+        //             return new sap.ui.model.Filter("ScopeItemID", sap.ui.model.FilterOperator.EQ, sScopeItemID);
+        //         });
+
+        //         // Combine scope filters with OR logic
+        //         var oScopeIDFilter = new sap.ui.model.Filter({
+        //             filters: aScopeFilters,
+        //             and: false  // Use OR condition for Scope IDs
+        //         });
+
+        //         aFilters.push(oScopeIDFilter);
+        //     }
+
+        //     // Step 2: Add Description Filters
+        //     var oDescComboBox = this.byId("descriptionComboBox");
+        //     var aSelectedDesc = oDescComboBox.getSelectedKeys();
+        //     if (aSelectedDesc.length > 0) {
+        //         var aDescFilters = aSelectedDesc.map(function (sKey) {
+        //             return new sap.ui.model.Filter("Description", sap.ui.model.FilterOperator.EQ, sKey);
+        //         });
+
+        //         var oDescFilter = new sap.ui.model.Filter({
+        //             filters: aDescFilters,
+        //             and: false  // OR operator for multiple Descriptions
+        //         });
+
+        //         aFilters.push(oDescFilter);
+        //     }
+
+        //     // Step 3: Add LOB Filters
+        //     var oLOBComboBox = this.byId("lobComboBox");
+        //     var aSelectedLOBs = oLOBComboBox.getSelectedKeys();
+        //     if (aSelectedLOBs.length > 0) {
+        //         var aLOBFilters = aSelectedLOBs.map(function (sKey) {
+        //             return new sap.ui.model.Filter("LOB", sap.ui.model.FilterOperator.EQ, sKey);
+        //         });
+
+        //         var oLOBFilter = new sap.ui.model.Filter({
+        //             filters: aLOBFilters,
+        //             and: false  // OR operator for multiple LOBs
+        //         });
+
+        //         aFilters.push(oLOBFilter);
+        //     }
+
+        //     // Step 4: Add Business Area Filters
+        //     var oBusinessAreaComboBox = this.byId("businessAreaComboBox");
+        //     var aSelectedBusinessAreas = oBusinessAreaComboBox.getSelectedKeys();
+        //     if (aSelectedBusinessAreas.length > 0) {
+        //         var aBusinessAreaFilters = aSelectedBusinessAreas.map(function (sKey) {
+        //             return new sap.ui.model.Filter("BusinessArea", sap.ui.model.FilterOperator.EQ, sKey);
+        //         });
+
+        //         var oBusinessAreaFilter = new sap.ui.model.Filter({
+        //             filters: aBusinessAreaFilters,
+        //             and: false  // OR operator for multiple Business Areas
+        //         });
+
+        //         aFilters.push(oBusinessAreaFilter);
+        //     }
+
+        //     // Step 5: Add Status Filters
+        //     var oStatusComboBox = this.byId("statusComboBox");
+        //     var aSelectedStatuses = oStatusComboBox.getSelectedKeys();
+        //     if (aSelectedStatuses.length > 0) {
+        //         var aStatusFilters = aSelectedStatuses.map(function (sKey) {
+        //             return new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.EQ, sKey);
+        //         });
+
+        //         var oStatusFilter = new sap.ui.model.Filter({
+        //             filters: aStatusFilters,
+        //             and: true  // OR operator for multiple Statuses
+        //         });
+
+        //         aFilters.push(oStatusFilter);
+        //     }
+
+        //     // Step 6: Apply Combined Filter to the Table
+        //     var oTable = this.byId("scopeItemsTable");
+        //     var oBinding = oTable.getBinding("rows");
+
+        //     if (oBinding) {
+        //         if (aFilters.length > 0) {
+        //             console.log("Applying Combined Filter:", aFilters);  // Log filter for debugging
+        //             oBinding.filter(new sap.ui.model.Filter(aFilters, true), sap.ui.model.FilterType.Application);
+        //         } else {
+        //             // If no filters are applied, clear existing filters
+        //             console.log("Clearing filters.");  // Log for debugging
+        //             oBinding.filter([]);
+        //         }
+        //     } else {
+        //         console.error("Table binding not found.");  // Debugging information
+        //     }
+        // },
+        // onValueHelpRequest: function () {
+        //     if (!this._oValueHelpDialog) {
+        //         this._oValueHelpDialog = new sap.m.SelectDialog({
+        //             title: "Select Scope ID",
+        //             search: this._handleValueHelpSearch.bind(this),
+        //             multiSelect: true,
+        //             items: {
+        //                 path: '/ScopeItems',
+        //                 template: new sap.m.StandardListItem({
+        //                     title: "{ScopeItemID}",
+        //                     description: "{ScopeItemDescription}"
+        //                 }),
+        //                 sorter: new sap.ui.model.Sorter("ScopeItemID", false)
+        //             },
+        //             confirm: this._handleValueHelpClose.bind(this),
+        //             cancel: this._handleValueHelpClose.bind(this)
+        //         });
+        //         this.getView().addDependent(this._oValueHelpDialog);
+        //     }
+        
+        //     this._oValueHelpDialog.open();
+        // },
+        
+        // _handleValueHelpSearch: function (evt) {
+        //     var sValue = evt.getParameter("value");
+        
+        //     // Create a filter for the 'ScopeItemID' property
+        //     var oFilter = new sap.ui.model.Filter({
+        //         path: "ScopeItemID", // Ensure the path matches the property in the model
+        //         operator: sap.ui.model.FilterOperator.Contains,
+        //         value1: sValue
+        //     });
+        
+        //     // Get the binding for the 'items' aggregation of the SelectDialog
+        //     var oBinding = evt.getSource().getBinding("items");
+        
+        //     // Check if the binding is present
+        //     if (oBinding) {
+        //         console.log("Applying search filter:", oFilter);
+        
+        //         // Apply the filter to the binding
+        //         oBinding.filter([oFilter]);
+        //     }
+        // },
+        
+        // _handleValueHelpClose: function (oEvent) {
+        //     var aSelectedItems = oEvent.getParameter("selectedItems");
+        //     var oMultiInput = this.byId("scopeIdMultiInput");
+        
+        //     // Clear the previous selections
+        //     this.aSelectedScopeIds = [];
+        //     oMultiInput.removeAllTokens();
+        
+        //     if (aSelectedItems && aSelectedItems.length > 0) {
+        //         aSelectedItems.forEach(function (oItem) {
+        //             var sScopeItemID = oItem.getTitle();
+        
+        //             oMultiInput.addToken(new sap.m.Token({
+        //                 key: sScopeItemID,
+        //                 text: sScopeItemID
+        //             }));
+        
+        //             this.aSelectedScopeIds.push(sScopeItemID);
+        //         }, this);
+        //     }
+        
+        //     // Apply combined filters whenever the Scope ID is changed
+        //     this._applyCombinedFilters();
+        // },
+        
+        // onComboBoxSelectionChange: function () {
+        //     // Call the combined filter function when any of the ComboBox selections change
+        //     this._applyCombinedFilters();
+        // },
+        
         onValueHelpRequest: function () {
             if (!this._oValueHelpDialog) {
                 this._oValueHelpDialog = new sap.m.SelectDialog({
                     title: "Select Scope ID",
+                    search: this._handleValueHelpSearch.bind(this),
                     multiSelect: true,
                     items: {
                         path: '/ScopeItems',
                         template: new sap.m.StandardListItem({
                             title: "{ScopeItemID}",
                             description: "{ScopeItemDescription}"
-                        })
+                        }),
+                        sorter: new sap.ui.model.Sorter("ScopeItemID", false)
                     },
                     confirm: this._handleValueHelpClose.bind(this),
                     cancel: this._handleValueHelpClose.bind(this)
@@ -81,11 +334,32 @@ sap.ui.define([
             this._oValueHelpDialog.open();
         },
 
+        // Handle search in SelectDialog
+        _handleValueHelpSearch: function (evt) {
+            var sValue = evt.getParameter("value");
+
+            // Create a filter for the 'ScopeItemID' property
+            var oFilter = new sap.ui.model.Filter({
+                path: "ScopeItemID",
+                operator: sap.ui.model.FilterOperator.Contains,
+                value1: sValue
+            });
+
+            // Get the binding for the 'items' aggregation of the SelectDialog
+            var oBinding = evt.getSource().getBinding("items");
+
+            // Apply the filter to the binding if present
+            if (oBinding) {
+                oBinding.filter([oFilter]);
+            }
+        },
+
+        // Handle selection in the SelectDialog and update the MultiInput tokens
         _handleValueHelpClose: function (oEvent) {
             var aSelectedItems = oEvent.getParameter("selectedItems");
             var oMultiInput = this.byId("scopeIdMultiInput");
 
-            // Clear the previous selections
+            // Clear previous selections
             this.aSelectedScopeIds = [];
             oMultiInput.removeAllTokens();
 
@@ -93,29 +367,25 @@ sap.ui.define([
                 aSelectedItems.forEach(function (oItem) {
                     var sScopeItemID = oItem.getTitle();
 
+                    // Add tokens to the MultiInput box
                     oMultiInput.addToken(new sap.m.Token({
                         key: sScopeItemID,
                         text: sScopeItemID
                     }));
 
+                    // Collect selected scope IDs
                     this.aSelectedScopeIds.push(sScopeItemID);
                 }, this);
             }
 
-            // Apply combined filters whenever the Scope ID is changed
+            // Apply combined filters to filter the table
             this._applyCombinedFilters();
-        },
-
-        onComboBoxSelectionChange: function () {
-            // Call the combined filter function when any of the ComboBox selections change
-            this._applyCombinedFilters();
-        },
-
+        }, 
         _applyCombinedFilters: function () {
             var aFilters = [];
 
             // Create filters based on selected scope IDs
-            if (this.aSelectedScopeIds.length > 0) {
+            if (this.aSelectedScopeIds && this.aSelectedScopeIds.length > 0) {
                 var aScopeFilters = this.aSelectedScopeIds.map(function (sScopeItemID) {
                     return new sap.ui.model.Filter("ScopeItemID", sap.ui.model.FilterOperator.EQ, sScopeItemID);
                 });
@@ -123,12 +393,13 @@ sap.ui.define([
                 // Combine scope filters with OR logic
                 var oScopeIDFilter = new sap.ui.model.Filter({
                     filters: aScopeFilters,
-                    and: false  // Use OR condition for Scope IDs
+                    and: false  // OR condition for Scope IDs
                 });
 
                 aFilters.push(oScopeIDFilter);
             }
 
+    
             // Step 2: Add Description Filters
             var oDescComboBox = this.byId("descriptionComboBox");
             var aSelectedDesc = oDescComboBox.getSelectedKeys();
@@ -136,15 +407,15 @@ sap.ui.define([
                 var aDescFilters = aSelectedDesc.map(function (sKey) {
                     return new sap.ui.model.Filter("Description", sap.ui.model.FilterOperator.EQ, sKey);
                 });
-
+        
                 var oDescFilter = new sap.ui.model.Filter({
                     filters: aDescFilters,
                     and: false  // OR operator for multiple Descriptions
                 });
-
+        
                 aFilters.push(oDescFilter);
             }
-
+        
             // Step 3: Add LOB Filters
             var oLOBComboBox = this.byId("lobComboBox");
             var aSelectedLOBs = oLOBComboBox.getSelectedKeys();
@@ -152,15 +423,15 @@ sap.ui.define([
                 var aLOBFilters = aSelectedLOBs.map(function (sKey) {
                     return new sap.ui.model.Filter("LOB", sap.ui.model.FilterOperator.EQ, sKey);
                 });
-
+        
                 var oLOBFilter = new sap.ui.model.Filter({
                     filters: aLOBFilters,
                     and: false  // OR operator for multiple LOBs
                 });
-
+        
                 aFilters.push(oLOBFilter);
             }
-
+        
             // Step 4: Add Business Area Filters
             var oBusinessAreaComboBox = this.byId("businessAreaComboBox");
             var aSelectedBusinessAreas = oBusinessAreaComboBox.getSelectedKeys();
@@ -168,15 +439,15 @@ sap.ui.define([
                 var aBusinessAreaFilters = aSelectedBusinessAreas.map(function (sKey) {
                     return new sap.ui.model.Filter("BusinessArea", sap.ui.model.FilterOperator.EQ, sKey);
                 });
-
+        
                 var oBusinessAreaFilter = new sap.ui.model.Filter({
                     filters: aBusinessAreaFilters,
                     and: false  // OR operator for multiple Business Areas
                 });
-
+        
                 aFilters.push(oBusinessAreaFilter);
             }
-
+        
             // Step 5: Add Status Filters
             var oStatusComboBox = this.byId("statusComboBox");
             var aSelectedStatuses = oStatusComboBox.getSelectedKeys();
@@ -184,19 +455,19 @@ sap.ui.define([
                 var aStatusFilters = aSelectedStatuses.map(function (sKey) {
                     return new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.EQ, sKey);
                 });
-
+        
                 var oStatusFilter = new sap.ui.model.Filter({
                     filters: aStatusFilters,
-                    and: true  // OR operator for multiple Statuses
+                    and: false  // OR operator for multiple Statuses
                 });
-
+        
                 aFilters.push(oStatusFilter);
             }
-
+        
             // Step 6: Apply Combined Filter to the Table
             var oTable = this.byId("scopeItemsTable");
             var oBinding = oTable.getBinding("rows");
-
+        
             if (oBinding) {
                 if (aFilters.length > 0) {
                     console.log("Applying Combined Filter:", aFilters);  // Log filter for debugging
@@ -209,7 +480,8 @@ sap.ui.define([
             } else {
                 console.error("Table binding not found.");  // Debugging information
             }
-        },
+        }
+,        
 
         onAfterRendering: function () {
             this._applyCustomStyles(); // Ensure this is called after rendering
