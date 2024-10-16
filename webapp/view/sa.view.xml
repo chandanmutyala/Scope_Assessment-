@@ -145,6 +145,15 @@
                 class="sapUiSmallMarginEnd"/>
             <m:Text text="No" />
         </m:HBox>
+         <m:HBox class="itemContainer">
+            <core:Icon
+                src="sap-icon://legend"
+                width="1.5rem"
+                height="1.5rem"
+                color="gray"
+                class="sapUiSmallMarginEnd"/>
+            <m:Text text="Planned" />
+        </m:HBox>
  
         <m:HBox class="itemContainer">
             <core:Icon
@@ -155,15 +164,7 @@
                 class="sapUiSmallMarginEnd"/>
             <m:Text text="Not Available" />
         </m:HBox>
-         <m:HBox class="itemContainer">
-            <core:Icon
-                src="sap-icon://legend"
-                width="1.5rem"
-                height="1.5rem"
-                color="gray"
-                class="sapUiSmallMarginEnd"/>
-            <m:Text text="Planned" />
-        </m:HBox>
+        
     </m:HBox>
 </m:VBox>
  
