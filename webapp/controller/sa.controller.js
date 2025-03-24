@@ -202,20 +202,20 @@ sap.ui.define([
             }
 
             // Step 5: Add Status Filters
-            var oStatusComboBox = this.byId("statusComboBox");
-            var aSelectedStatuses = oStatusComboBox.getSelectedKeys();
-            if (aSelectedStatuses.length > 0) {
-                var aStatusFilters = aSelectedStatuses.map(function (sKey) {
-                    return new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.EQ, sKey);
-                });
+            // var oStatusComboBox = this.byId("statusComboBox");
+            // var aSelectedStatuses = oStatusComboBox.getSelectedKeys();
+            // if (aSelectedStatuses.length > 0) {
+            //     var aStatusFilters = aSelectedStatuses.map(function (sKey) {
+            //         return new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.EQ, sKey);
+            //     });
 
-                var oStatusFilter = new sap.ui.model.Filter({
-                    filters: aStatusFilters,
-                    and: false  // OR operator for multiple Statuses
-                });
+            //     var oStatusFilter = new sap.ui.model.Filter({
+            //         filters: aStatusFilters,
+            //         and: false  // OR operator for multiple Statuses
+            //     });
 
-                aFilters.push(oStatusFilter);
-            }
+            //     aFilters.push(oStatusFilter);
+            // }
 
             // Step 6: Apply Combined Filter to the Table
             var oTable = this.byId("scopeItemsTable");
@@ -260,7 +260,7 @@ sap.ui.define([
                 } else {
                     // If any key is selected, hide all columns first
                     aColumns.forEach(function (oColumn, i) {
-                        if (i >= 5) {  // Assuming country columns start from index 6
+                        if (i >= 4) {  // Assuming country columns start from index 6
                             oColumn.setVisible(false);  // Hide all columns initially
                         }
                     });
@@ -269,7 +269,7 @@ sap.ui.define([
                     aColumns.forEach(function (oColumn, i) {
                         if (i >= 4) {  // Assuming country columns start from index 6
                             var sKey = Object.keys(oColumnMapping).find(function (key) {
-                                return oColumnMapping[key] === (i + 1);  // Adjust +1 based on your mapping logic
+                                return oColumnMapping[key] === (i + 2);  // Adjust +1 based on your mapping logic
                             });
 
                             // If the column matches the selected country key, show it
